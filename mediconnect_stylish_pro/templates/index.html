@@ -1,0 +1,20 @@
+{% extends 'base.html' %}{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+  <div>
+    <h1 class="text-3xl font-bold text-gray-800">Welcome to MediConnect</h1>
+    <p class="mt-4 text-gray-600">A simple, stylish hospital management demo. Login as Admin / Doctor / Patient using seeded accounts.</p>
+    <div class="mt-6 space-x-2">
+      <a href="{{ url_for('login') }}" class="px-4 py-2 bg-indigo-600 text-white rounded">Get Started</a>
+      <a href="{{ url_for('admin_reports') }}" class="px-4 py-2 border rounded">Reports (Admin)</a>
+    </div>
+  </div>
+  <div class="bg-white p-6 rounded shadow">
+    <h3 class="font-semibold">Seeded accounts</h3>
+    <ul class="mt-2 text-sm text-gray-600">
+      <li>Admin: admin@example.com / password123</li>
+      <li>Doctor: doctor@example.com / password123</li>
+      <li>Patient: patient@example.com / password123</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

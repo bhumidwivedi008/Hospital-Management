@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MediConnect</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <nav class="bg-white shadow">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex justify-between">
+        <div class="flex space-x-4 py-4">
+          <a href="/" class="text-xl font-semibold text-indigo-600">MediConnect</a>
+          <a href="/" class="text-gray-600 hover:text-indigo-600">Home</a>
+          {% if session.role=='admin' %}<a href="{{ url_for('admin_dashboard') }}" class="text-gray-600 hover:text-indigo-600">Admin</a>{% endif %}
+          {% if session.role=='doctor' %}<a href="{{ url_for('doctor_dashboard') }}" class="text-gray-600 hover:text-indigo-600">Doctor</a>{% endif %}
+          {% if session.role=='patient' %}<a href="{{ url_for('patient_dashboard') }}" class="text-gray-600 hover:text-indigo-600">Patient</a>{% endif %}
+        </div>
+        <div class="flex items-center space-x-4 py-4">
+          <div class="relative">
+            <button onclick="document.getElementById('notif').classList.toggle('hidden')" class="relative inline-flex items-center">
+              <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5"></path></svg>
+              {% if __unread_count>0 %}<span class="absolute -top-1 -right-2 bg-red-500 text-white rounded-full text-xs px-1">{{__unread_count}}</span>{% endif %}
+            </button>
+            <div id="notif" class="hidden absolute right-0 mt-2 w-80 bg-white shadow-lg rounded">
+              <div class="p-3 text-sm font-medium">Notifications</div>
+              <div class="max-h-64 overflow-auto">
+                {% for n in __notifications %}
+                  <div class="px-4 py-2 border-t {% if n.is_read==0 %}bg-indigo-50{% endif %}">
+                    <div class="text-sm">{{n.message}}</div>
+                    <div class="text-xs text-gray-400">{{n.created_at}}</div>
+                    <div class="text-xs"><a href="{{ url_for('notifications.mark_read', nid=n.id) }}" class="text-indigo-600">Mark read</a></div>
+                  </div>
+                {% endfor %}
+              </div>
+              <div class="p-2 text-center"><a href="{{ url_for('clear_notifications') }}" class="text-xs text-indigo-600">Clear</a></div>
+            </div>
+          </div>
+
+          {% if session.name %}
+            <div class="text-gray-700">Hi, <strong>{{session.name}}</strong></div>
+            <a href="{{ url_for('logout') }}" class="px-3 py-2 bg-red-500 text-white rounded">Logout</a>
+          {% else %}
+            <a href="{{ url_for('login') }}" class="px-3 py-2 bg-indigo-600 text-white rounded">Login</a>
+            <a href="{{ url_for('register') }}" class="px-3 py-2 border rounded">Register</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-6xl mx-auto p-6">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="space-y-2">
+          {% for cat, msg in messages %}
+            <div class="px-4 py-3 rounded {{ 'bg-green-50 text-green-800' if 'success' in cat else ('bg-red-50 text-red-800' if 'danger' in cat else 'bg-yellow-50 text-yellow-800') }}">{{msg}}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

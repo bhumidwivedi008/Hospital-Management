@@ -1,0 +1,16 @@
+{% extends 'base.html' %}{% block content %}
+<div class="max-w-md mx-auto bg-white p-6 rounded shadow">
+  <h2 class="text-xl font-semibold mb-4">Book with {{doctor.name}}</h2>
+  <form method="post">
+    <label class="block text-sm">Date (YYYY-MM-DD)</label>
+    <input name="date" class="w-full border px-3 py-2 rounded mb-3" placeholder="2025-11-10">
+    <label class="block text-sm">Mode</label>
+    <input name="mode" class="w-full border px-3 py-2 rounded mb-3" placeholder="Online/Offline">
+    <label class="block text-sm">Disease / Reason</label>
+    <input name="disease" class="w-full border px-3 py-2 rounded mb-3">
+    <label class="block text-sm">Age</label>
+    <input name="age" type="number" class="w-full border px-3 py-2 rounded mb-3">
+    <button class="w-full py-2 bg-indigo-600 text-white rounded">Book Appointment</button>
+  </form>
+</div>
+{% endblock %}

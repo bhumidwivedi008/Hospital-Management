@@ -1,0 +1,18 @@
+{% extends 'base.html' %}{% block content %}
+<div class="max-w-md mx-auto bg-white p-6 rounded shadow">
+  <h2 class="text-xl font-semibold mb-4">Register</h2>
+  <form method="post" enctype="multipart/form-data">
+    <label class="block text-sm">Name</label>
+    <input name="name" class="w-full border px-3 py-2 rounded mb-3" placeholder="Full name">
+    <label class="block text-sm">Email</label>
+    <input name="email" class="w-full border px-3 py-2 rounded mb-3" placeholder="email">
+    <label class="block text-sm">Password</label>
+    <input name="password" type="password" class="w-full border px-3 py-2 rounded mb-3" placeholder="password">
+    <label class="block text-sm">Role</label>
+    <select name="role" class="w-full border px-3 py-2 rounded mb-3"><option value="patient">Patient</option><option value="doctor">Doctor</option></select>
+    <label class="block text-sm">Profile picture (optional)</label>
+    <input type="file" name="profile_pic" class="mb-3">
+    <button class="w-full py-2 bg-indigo-600 text-white rounded">Create account</button>
+  </form>
+</div>
+{% endblock %}

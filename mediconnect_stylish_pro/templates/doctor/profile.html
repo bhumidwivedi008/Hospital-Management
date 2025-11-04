@@ -1,0 +1,21 @@
+{% extends 'base.html' %}{% block content %}
+<h2 class="text-2xl mb-4">Doctor Profile</h2>
+<div class="bg-white rounded shadow p-4">
+  <form method="post">
+    <label class="block text-sm">Name</label>
+    <input name="name" class="w-full border px-3 py-2 rounded mb-3" value="{{doctor.name if doctor else ''}}">
+    <label class="block text-sm">Specialization</label>
+    <input name="specialization" class="w-full border px-3 py-2 rounded mb-3" value="{{doctor.specialization if doctor else ''}}">
+    <label class="block text-sm">City</label>
+    <input name="city" class="w-full border px-3 py-2 rounded mb-3" value="{{doctor.city if doctor else ''}}">
+    <div class="flex space-x-2">
+      <input name="experience" placeholder="Experience" class="border px-3 py-2 rounded mb-3" value="{{doctor.experience if doctor else ''}}">
+      <input name="rating" placeholder="Rating" class="border px-3 py-2 rounded mb-3" value="{{doctor.rating if doctor else ''}}">
+      <input name="fee" placeholder="Fee" class="border px-3 py-2 rounded mb-3" value="{{doctor.fee if doctor else ''}}">
+    </div>
+    <label class="block text-sm">Mode</label>
+    <input name="mode" class="w-full border px-3 py-2 rounded mb-3" value="{{doctor.mode if doctor else ''}}">
+    <button class="px-4 py-2 bg-indigo-600 text-white rounded">Save</button>
+  </form>
+</div>
+{% endblock %}

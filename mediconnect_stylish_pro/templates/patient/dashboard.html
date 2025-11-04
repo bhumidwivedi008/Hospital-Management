@@ -1,0 +1,51 @@
+{% extends 'base.html' %}{% block content %}
+<h2 class="text-2xl font-semibold mb-4">Patient Dashboard</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div class="bg-white p-4 rounded shadow">
+    <h3 class="font-medium">Book Appointment</h3>
+    <ul class="mt-2">
+      {% for d in doctors %}
+        <li class="py-2 flex justify-between items-center border-b">
+          <div><strong>{{d.name}}</strong><div class="text-sm text-gray-500">{{d.specialization}}</div></div>
+          <a href="{{ url_for('book', doctor_id=d.id) }}" class="text-indigo-600">Book</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="bg-white p-4 rounded shadow">
+    <h3 class="font-medium">Your Appointments</h3>
+    <ul class="divide-y mt-2">
+      {% for a in appointments %}
+        <li class="py-3">
+          <div class="flex justify-between">
+            <div>
+              <div class="text-sm">#{{a.id}} — Dr {{a.doctor_name}} — {{a.date}}</div>
+              <div class="text-sm text-gray-500">{{a.disease}} • Age: {{a.age}}</div>
+              {% if a.medicine %}<div class="mt-1 text-sm"><strong>Medicine:</strong> {{a.medicine}}</div>{% endif %}
+              {% if a.notes %}<div class="text-sm"><strong>Notes:</strong> {{a.notes}}</div>{% endif %}
+              {% if a.reports %}
+                <div class="mt-2 text-sm">Your Reports:
+                  {% for fname in a.reports.split(',') %}
+                    <a href="{{ url_for('uploaded_report', filename=fname) }}" class="text-indigo-600 text-sm ml-2" target="_blank">{{fname}}</a>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+            <div class="text-right">
+              <div class="text-sm {{ 'text-green-600' if a.status=='Completed' else 'text-yellow-600' if a.status=='Confirmed' else 'text-red-600' if a.status=='Cancelled' else 'text-blue-600' }}">{{a.status}}</div>
+              {% if a.status!='Completed' %}<a href="{{ url_for('patient_cancel', appid=a.id) }}" class="text-sm text-red-600">Cancel</a>{% endif %}
+            </div>
+          </div>
+          <form method="post" action="{{ url_for('upload_report', appid=a.id) }}" enctype="multipart/form-data" class="mt-2">
+            <input type="file" name="report" class="text-sm">
+            <button class="px-3 py-1 bg-indigo-600 text-white rounded text-sm">Upload Report</button>
+          </form>
+        </li>
+      {% else %}
+        <li class="py-3 text-gray-500">No appointments found.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}
