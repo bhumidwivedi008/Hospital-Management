@@ -1,0 +1,16 @@
+{
+  "rules": [
+    {
+      "condition": "always",
+      "commandType": "vscode",
+      "command": "studio-manager.openFile README.md 1"
+    },
+    {
+      "condition": "always",
+      "commandType": "vscode",
+      "command": "studio-manager.openSimpleBrowser https://${STUDIO_HOST_ID}-5000.${STUDIO_HOST}",
+      "delay": 2000
+    }
+  ],
+  "simpleBrowserDefaultAppUrl": "https://${STUDIO_HOST_ID}-5000.${STUDIO_HOST}"
+}
